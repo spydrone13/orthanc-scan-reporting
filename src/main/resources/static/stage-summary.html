@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lots by Stage</title>
+  <link rel="stylesheet" href="/css/reports.css">
+  <script type="module" src="/js/stage-summary.js"></script>
+</head>
+<body>
+  <main class="page">
+    <div class="card">
+      <h1 class="card-title">Lots by Stage</h1>
+      <p class="intro">
+        Active lots at each stage, kept up to date from lot events. Canceled, destroyed and complete lots
+        aren't counted; lots on hold are.
+      </p>
+
+      <div class="toolbar">
+        <span id="total" class="count" aria-live="polite"></span>
+        <span class="toolbar-actions">
+          <span id="updated" class="count"></span>
+          <button id="refresh" type="button" class="btn">Refresh</button>
+        </span>
+      </div>
+
+      <div id="status" class="status" role="status"></div>
+
+      <div class="table-wrap" id="table-wrap" hidden>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Stage</th>
+              <th scope="col" class="num">Active lots</th>
+              <th scope="col"><span class="visually-hidden">Share of active lots</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p id="empty" class="empty" hidden>No active lots.</p>
+    </div>
+  </main>
+</body>
+</html>

@@ -96,6 +96,25 @@ class StageSummaryProjectorTest {
 	}
 
 	@Test
+	void keepsTheLotsWipLocation() {
+		projector.apply("L1", new LotState("intake", "INTAKE-002", LotStatus.ACTIVE, false), 1L, NOW);
+
+		assertThat(snapshots.findById("L1")).get().extracting(LotSnapshot::getWipLocation).isEqualTo("INTAKE-002");
+	}
+
+	@Test
+	void findsActiveLotsAtAStage() {
+		projector.apply("L3", active("intake"), 1L, NOW);
+		projector.apply("L1", active("intake"), 2L, NOW);
+		projector.apply("L2", new LotState("intake", "INTAKE-001", LotStatus.CANCELED, false), 3L, NOW);
+		projector.apply("L4", active("testing"), 4L, NOW);
+
+		assertThat(snapshots.findByCurrentStageAndStatusOrderByLotIdAsc("intake", LotStatus.ACTIVE))
+				.extracting(LotSnapshot::getLotId)
+				.containsExactly("L1", "L3");
+	}
+
+	@Test
 	void eventsAfterASeedReplaceTheSeededState() {
 		projector.applyAll(Map.of("L1", active("intake")), NOW);
 

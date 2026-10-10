@@ -41,5 +41,35 @@
       <p id="empty" class="empty" hidden>No active lots.</p>
     </div>
   </main>
+
+  <dialog id="lots-dialog" class="dialog" aria-labelledby="lots-title">
+    <!-- The padding lives on this wrapper, so a click on the dialog element itself is always the backdrop. -->
+    <div class="dialog-body">
+    <div class="dialog-header">
+      <div>
+        <h2 id="lots-title" class="dialog-title"></h2>
+        <span id="lots-count" class="count" aria-live="polite"></span>
+      </div>
+      <button id="lots-close" type="button" class="btn">Close</button>
+    </div>
+
+    <div id="lots-status" class="status" role="status"></div>
+
+    <div class="table-wrap" id="lots-table-wrap" hidden>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Lot</th>
+            <th scope="col">WIP location</th>
+            <th scope="col">Hold</th>
+            <th scope="col">Last event</th>
+          </tr>
+        </thead>
+        <tbody id="lot-rows"></tbody>
+      </table>
+    </div>
+    <p id="lots-empty" class="empty" hidden>No active lots at this stage.</p>
+    </div>
+  </dialog>
 </body>
 </html>

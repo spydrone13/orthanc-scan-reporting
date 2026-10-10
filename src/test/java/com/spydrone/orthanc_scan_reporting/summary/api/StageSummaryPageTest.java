@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.spydrone.orthanc_scan_reporting.summary.LotSnapshotRepository;
 import com.spydrone.orthanc_scan_reporting.summary.StageSummaryRepository;
 
 @WebMvcTest(StageSummaryController.class)
@@ -25,6 +26,9 @@ class StageSummaryPageTest {
 
 	@MockitoBean
 	private StageSummaryRepository summaries;
+
+	@MockitoBean
+	private LotSnapshotRepository snapshots;
 
 	@Test
 	void friendlyUrlForwardsToPage() throws Exception {
@@ -44,7 +48,8 @@ class StageSummaryPageTest {
 	void servesPageAndAssets() throws Exception {
 		mvc.perform(get("/stage-summary.html"))
 				.andExpect(status().isOk())
-				.andExpect(content().string(containsString("id=\"rows\"")));
+				.andExpect(content().string(containsString("id=\"rows\"")))
+				.andExpect(content().string(containsString("id=\"lots-dialog\"")));
 		mvc.perform(get("/js/stage-summary.js")).andExpect(status().isOk());
 		mvc.perform(get("/css/reports.css")).andExpect(status().isOk());
 	}

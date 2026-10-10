@@ -153,6 +153,83 @@ tbody tr:last-child td {
   transition: width 0.4s ease;
 }
 
+/* A button that reads as a link, e.g. a stage name that opens its lots. */
+.link {
+  font: inherit;
+  color: var(--bright-blue);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  word-break: break-all;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1875rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.chip--hold {
+  color: oklch(45% 0.12 70);
+  background: oklch(95% 0.07 85);
+}
+
+/* Lots modal */
+.dialog {
+  width: calc(100% - 2rem);
+  max-width: 40rem;
+  max-height: calc(100dvh - 4rem);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 12px 48px oklch(0% 0 0 / 18%);
+  color: var(--gray-900);
+}
+
+.dialog::backdrop {
+  background: oklch(19.37% 0.006 300.98 / 45%);
+}
+
+.dialog-body {
+  padding: 1.5rem;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dialog-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
 /* Buttons */
 .btn {
   font: inherit;

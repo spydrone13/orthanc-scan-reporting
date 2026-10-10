@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 
 import com.spydrone.orthanc_scan_reporting.lot.events.LotEventMessage.LotState;
@@ -17,12 +18,14 @@ import com.spydrone.orthanc_scan_reporting.lot.events.LotStatus;
  * the right stage can be decremented, and which event was applied last, so duplicates are skipped.
  */
 @Entity
-@Table(name = "lot_snapshots")
+@Table(name = "lot_snapshots", indexes = @Index(name = "ix_lot_snapshots_stage", columnList = "current_stage, status"))
 public class LotSnapshot {
 
 	@Id
 	private String lotId;
 	private String currentStage;
+	/** Null for lots stored before this was recorded, until their next event. */
+	private String wipLocation;
 	@Enumerated(EnumType.STRING)
 	private LotStatus status;
 	@Column(nullable = false)
@@ -50,6 +53,7 @@ public class LotSnapshot {
 
 	void update(LotState state, Long sequence, Instant at) {
 		this.currentStage = state.currentStage();
+		this.wipLocation = state.wipLocation();
 		this.status = state.status();
 		this.onHold = state.onHold();
 		this.lastSequence = sequence;
@@ -62,6 +66,10 @@ public class LotSnapshot {
 
 	public String getCurrentStage() {
 		return currentStage;
+	}
+
+	public String getWipLocation() {
+		return wipLocation;
 	}
 
 	public LotStatus getStatus() {
